@@ -5,6 +5,9 @@
  */
 package projektisi;
 
+import com.maciek.connection.Connection;
+import java.io.IOException;
+
 /**
  *
  * @author cos
@@ -12,8 +15,10 @@ package projektisi;
 public class Pi {
 
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
        System.out.println("Projekt ISI");
+       Connection polaczenie = new Connection();
+       polaczenie.start();
     }
     
 }
