@@ -7,6 +7,9 @@ package projektisi;
 
 import com.maciek.connection.Connection;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.bluetooth.BluetoothStateException;
 
 /**
  *
@@ -17,8 +20,21 @@ public class Pi {
     
     public static void main(String[] args) throws IOException {
        System.out.println("Projekt ISI");
-       Connection polaczenie = new Connection();
-       polaczenie.start();
+       nawiaz_polaczenie();   
+    }
+
+    private static void nawiaz_polaczenie() {
+        try 
+        {
+            Connection polaczenie = new Connection();
+            polaczenie.start();
+        } 
+        catch (IOException ex) 
+        {
+            System.out.println("Nie mozna utworzyc servera");
+            Logger.getLogger(Pi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
     }
     
 }

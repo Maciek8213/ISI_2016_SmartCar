@@ -21,13 +21,13 @@ import javax.microedition.io.StreamConnectionNotifier;
  * @author cos
  */
 public class Connection {
-    
+   String adres_urzadzenia="34:4D:F7:F7:97:17";
+   Thread Odczyt_danych;
     void informacje()
     {
-    
         try {
             LocalDevice localDevice = LocalDevice.getLocalDevice();
-            System.out.println("Address: "+localDevice.getBluetoothAddress());
+            System.out.println("Addres: "+localDevice.getBluetoothAddress());
             System.out.println("Name: "+localDevice.getFriendlyName());
         } catch (BluetoothStateException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
@@ -36,35 +36,49 @@ public class Connection {
     }
 
     public void start() throws IOException {
-        Informacje_o_urzadzeniu();
-        StreamConnection connection = this.server();
-        Watek_danych maciek = new Watek_danych(connection);
-        Informacje_polaczenie(connection);
-        new Thread(maciek).start();
+        Informacje_o_urzadzeniu();//wyswietl info  o pi
+        StreamConnection connection = this.server(); // postaw serwer 
+        if(polacz_z_odpowiednim_urzadzeniem(connection))
+        {
+            Odczyt_danych=new Thread(new Watek_danych(connection));
+            Odczyt_danych.start();
+        }
+        else
+        {
+            connection.close();
+            start(); 
+        }
     }
     
-    void Informacje_polaczenie(StreamConnection con) throws IOException
+    private boolean polacz_z_odpowiednim_urzadzeniem(StreamConnection con) throws IOException
     {
         RemoteDevice dev = RemoteDevice.getRemoteDevice(con);
-        System.out.println("Remote device address: "+dev.getBluetoothAddress());
-        System.out.println("Remote device name: "+dev.getFriendlyName(true));
+        if(dev.getBluetoothAddress().equals(adres_urzadzenia))
+        {
+            System.out.println("Nawiazano polaczenie z:");
+            System.out.println("Adres urzadzeia: "+dev.getBluetoothAddress());
+            System.out.println("Nazwa urzadzenia: "+dev.getFriendlyName(true));
+            return true;
+        }
+        else
+        {
+            System.out.println("Nie prawidlowe urzadznie");
+            return false;
+        }
     }
     
-    void Informacje_o_urzadzeniu() throws BluetoothStateException
+    private void Informacje_o_urzadzeniu() throws BluetoothStateException
     {
         LocalDevice localDevice = LocalDevice.getLocalDevice();
-        System.out.println("Address: "+localDevice.getBluetoothAddress());
-        System.out.println("Name: "+localDevice.getFriendlyName());
+        System.out.println("Addres serwera: "+localDevice.getBluetoothAddress());
+        System.out.println("Nazwa serwera: "+localDevice.getFriendlyName());          
     }
 
     private StreamConnection server() throws IOException {
-        UUID uuid = new UUID("1101", true);
-        //Create the servicve url
-        String connectionString = "btspp://localhost:" + uuid +";name=Sample SPP Server";
-        //open server url
-        StreamConnectionNotifier streamConnNotifier = (StreamConnectionNotifier)Connector.open(connectionString);
-        //Wait for client connection
-        System.out.println("\nServer Started. Waiting for clients to connect…");
+        UUID uuid = new UUID("1101", true);//Create the servicve url
+        String connectionString = "btspp://localhost:" + uuid +";name=Sample SPP Server";//open server url
+        StreamConnectionNotifier streamConnNotifier = (StreamConnectionNotifier)Connector.open(connectionString);//Wait for client connection
+        System.out.println("\nServer Started. Czekam na klienta…");
         StreamConnection connection=streamConnNotifier.acceptAndOpen();// tu zaczyna prace i czeka na polczenie
         return connection;
     }
