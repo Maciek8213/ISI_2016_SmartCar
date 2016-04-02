@@ -16,17 +16,17 @@ import javax.bluetooth.BluetoothStateException;
  * @author cos
  */
 public class Pi {
-
+static String Adres_Clienta_BT="344DF7F79717"; // Adress z ktorym pi moze sie polaczyc
     
     public static void main(String[] args) throws IOException {
        System.out.println("Projekt ISI");
-       nawiaz_polaczenie();   
+       nawiaz_polaczenie(Adres_Clienta_BT);   
     }
 
-    private static void nawiaz_polaczenie() {
+    private static void nawiaz_polaczenie(String Adres_Clienta_BT) {
         try 
         {
-            Connection polaczenie = new Connection();
+            Connection polaczenie = new Connection(Adres_Clienta_BT);
             polaczenie.start();
         } 
         catch (IOException ex) 

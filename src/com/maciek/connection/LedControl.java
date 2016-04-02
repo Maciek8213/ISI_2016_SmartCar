@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class LedControl {
     private static boolean Status_drzwi=false;     
     GpioController gpio = GpioFactory.getInstance();// will instantly power up the pin
-    GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "PinLED", PinState.HIGH);// creating the pin with parameter PinState.HIGH
+    GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "PinLED", PinState.LOW);// creating the pin with parameter PinState.HIGH
 	
     public LedControl() {
     }
@@ -26,11 +26,19 @@ public class LedControl {
         pin.low();
     }
 
-    private void odblokuj_drzwi() {
-       pin.high();
-       spij(1000);
-       pin.low();
-       stan_drzwi_update();//wyswietla stan dzwi i aktualizuje  
+    public void odblokuj_drzwi() { // nalezy to doprecyzowac  musi chodzic w watku bo usypia 
+        new Thread(new Runnable() {
+        @Override
+        public void run() {
+        zapal();
+        spij(1000);
+        zgas();
+        stan_drzwi_update();//wyswietla stan dzwi i aktualizuje  
+            }
+        }).start();
+        
+      
+        
 //  gpio.shutdown();
     }
 

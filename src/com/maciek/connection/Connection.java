@@ -21,9 +21,13 @@ import javax.microedition.io.StreamConnectionNotifier;
  * @author cos
  */
 public class Connection {
-   String adres_urzadzenia="34:4D:F7:F7:97:17";
+   static String adres_urzadzenia;
    Thread Odczyt_danych;
    Thread Zapis_danych;// do zakodzenia w zalezności od tego co będzie po strnonie androida
+
+    public Connection(String Adres_Clienta_BT) {
+        adres_urzadzenia=Adres_Clienta_BT;
+    }
     void informacje()
     {
         try {

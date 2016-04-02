@@ -22,27 +22,25 @@ public class Watek_Odczyt implements Runnable{
     Watek_Odczyt(StreamConnection connection) {
         polaczenie=connection;
         led = new LedControl();// w zaleznosci co ma robic
+        led.odblokuj_drzwi();
     }
     
     @Override
     public void run() {
         try
         {
-        System.out.println("Watek_Nasluchuje...");
-        BufferedReader bReader=new BufferedReader(new InputStreamReader(polaczenie.openInputStream()));
+            System.out.println("Watek_Nasluchuje...");
+            BufferedReader bReader=new BufferedReader(new InputStreamReader(polaczenie.openInputStream()));
         while(true)
         {
-        String lineRead=bReader.readLine();
-        if (lineRead.equals("g"))
-        { 
-        led.zapal();    
-        }else if(lineRead.equals("1"))
-        led.zgas(); 
-        System.out.print(lineRead);
+         String lineRead=bReader.readLine();
+            if (lineRead.equals("g")){ 
+                led.zapal();    
+            }else if(lineRead.equals("1"))
+                led.zgas(); 
+         System.out.print(lineRead);
         }
-        
-        }
-       catch(Exception e)
+        }catch(Exception e)
         {
                 System.out.println("Watek sie wysypal soreczki :(");
         }
