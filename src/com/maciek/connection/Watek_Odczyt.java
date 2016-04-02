@@ -15,49 +15,37 @@ import javax.microedition.io.StreamConnection;
  *
  * @author cos
  */
-public class Watek_danych implements Runnable{
-StreamConnection polaczenie=null;
-LedControl led;
-String ostatnia;   
-Watek_danych(StreamConnection connection) {
-        
+public class Watek_Odczyt implements Runnable{
+    StreamConnection polaczenie=null;
+    LedControl led;   
+    
+    Watek_Odczyt(StreamConnection connection) {
         polaczenie=connection;
-        led = new LedControl();
-   
+        led = new LedControl();// w zaleznosci co ma robic
     }
     
     @Override
     public void run() {
-       try{
-        
-        int p=0;
+        try
+        {
+        System.out.println("Watek_Nasluchuje...");
         BufferedReader bReader=new BufferedReader(new InputStreamReader(polaczenie.openInputStream()));
         while(true)
         {
-        try{
-        if(p==0)    
-            System.out.println("Watek rozpoczyna prace");
-        p++;
         String lineRead=bReader.readLine();
-        if (lineRead.equals("g") || lineRead.equals("1"))
+        if (lineRead.equals("g"))
         { 
-            led.zapal();    
-        }else
-            led.zgas();  
+        led.zapal();    
+        }else if(lineRead.equals("1"))
+        led.zgas(); 
         System.out.print(lineRead);
-            }catch(Exception e)
-            {
-                Thread.sleep(1000);
-              //  System.out.println(""e.getMessage());
-              //  break;
-            }
         }
         
-    }
+        }
        catch(Exception e)
-            {
+        {
                 System.out.println("Watek sie wysypal soreczki :(");
-            }
+        }
     
     }
     }

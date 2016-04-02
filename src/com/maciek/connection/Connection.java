@@ -23,6 +23,7 @@ import javax.microedition.io.StreamConnectionNotifier;
 public class Connection {
    String adres_urzadzenia="34:4D:F7:F7:97:17";
    Thread Odczyt_danych;
+   Thread Zapis_danych;// do zakodzenia w zalezności od tego co będzie po strnonie androida
     void informacje()
     {
         try {
@@ -40,7 +41,7 @@ public class Connection {
         StreamConnection connection = this.server(); // postaw serwer 
         if(polacz_z_odpowiednim_urzadzeniem(connection))
         {
-            Odczyt_danych=new Thread(new Watek_danych(connection));
+            Odczyt_danych=new Thread(new Watek_Odczyt(connection));
             Odczyt_danych.start();
         }
         else
