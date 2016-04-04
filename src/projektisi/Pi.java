@@ -5,6 +5,7 @@
  */
 package projektisi;
 
+import com.dudus.camera.ClassImplements;
 import com.maciek.connection.Connection;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -17,9 +18,10 @@ import javax.bluetooth.BluetoothStateException;
  */
 public class Pi {
 static String Adres_Clienta_BT="344DF7F79717"; // Adress z ktorym pi moze sie polaczyc
-    
+private static Thread Aparat;   
     public static void main(String[] args) throws IOException {
        System.out.println("Projekt ISI");
+       Obsluga_aparatu_watek();
        nawiaz_polaczenie(Adres_Clienta_BT);   
     }
 
@@ -36,5 +38,15 @@ static String Adres_Clienta_BT="344DF7F79717"; // Adress z ktorym pi moze sie po
         }
       
     }
+
+    private static void Obsluga_aparatu_watek() {
+       ClassImplements obsluga = new ClassImplements();
+       Aparat=new Thread( () -> {
+           new ClassImplements();
+       });
+       Aparat.start();
+    }
+
+   
     
 }

@@ -79,7 +79,7 @@ public class Connection {
         System.out.println("Nazwa serwera: "+localDevice.getFriendlyName());          
     }
 
-    private StreamConnection server() throws IOException {
+    public StreamConnection server() throws IOException { // public bo testy trzeba to jakos rozwiazac
         UUID uuid = new UUID("1101", true);//Create the servicve url
         String connectionString = "btspp://localhost:" + uuid +";name=Sample SPP Server";//open server url
         StreamConnectionNotifier streamConnNotifier = (StreamConnectionNotifier)Connector.open(connectionString);//Wait for client connection

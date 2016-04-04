@@ -36,9 +36,6 @@ public class LedControl {
         stan_drzwi_update();//wyswietla stan dzwi i aktualizuje  
             }
         }).start();
-        
-      
-        
 //  gpio.shutdown();
     }
 

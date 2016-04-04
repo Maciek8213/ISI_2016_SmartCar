@@ -8,10 +8,24 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import static com.pi4j.wiringpi.Gpio.wiringPiSetup;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClassImplements 
-{
-    public static void main(String[] args) throws InterruptedException 
+{   
+
+    
+    
+    public ClassImplements()  {
+            this.start();
+    }
+    
+    
+    
+    
+    
+    
+    public static void  start() 
     {
         wiringPiSetup();
         final GpioController gpio = GpioFactory.getInstance();
