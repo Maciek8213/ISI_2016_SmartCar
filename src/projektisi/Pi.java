@@ -21,8 +21,8 @@ static String Adres_Clienta_BT="344DF7F79717"; // Adress z ktorym pi moze sie po
 private static Thread Aparat;   
     public static void main(String[] args) throws IOException {
        System.out.println("Projekt ISI");
-       Obsluga_aparatu_watek();
-       nawiaz_polaczenie(Adres_Clienta_BT);   
+       //Obsluga_aparatu_watek(); // to jest cześć sewcia od komentuj sobie o zakomentuja moja to Ci smignie
+       nawiaz_polaczenie(Adres_Clienta_BT);   // Czesc maćka BT+ drzwi
     }
 
     private static void nawiaz_polaczenie(String Adres_Clienta_BT) {
