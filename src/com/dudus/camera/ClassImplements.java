@@ -16,10 +16,10 @@ public class ClassImplements
         wiringPiSetup();
         final GpioController gpio = GpioFactory.getInstance();
 
-        GpioPinDigitalOutput sensor_trigger = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, 
+        GpioPinDigitalOutput sensor_trigger = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, 
             "Sensor Trigger", PinState.LOW);
 
-        GpioPinDigitalInput sensor_result = gpio.provisionDigitalInputPin(RaspiPin.GPIO_24, 
+        GpioPinDigitalInput sensor_result = gpio.provisionDigitalInputPin(RaspiPin.GPIO_05, 
             "Sensor Result", PinPullResistance.PULL_DOWN);
 
         DistanceSensorClass rangesensor = new DistanceSensorClass(sensor_trigger, sensor_result);
