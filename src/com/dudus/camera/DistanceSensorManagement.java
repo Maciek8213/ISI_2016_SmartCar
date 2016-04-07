@@ -8,41 +8,38 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import static com.pi4j.wiringpi.Gpio.wiringPiSetup;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class ClassImplements 
+public class DistanceSensorManagement
 {   
 
-    
-    
-    public ClassImplements()  {
-            this.start();
+    public DistanceSensorManagement()  
+    {
+            this.manage();
     }
-    
-    
-    
-    
-    
-    
-    public static void  start() 
+
+    private void manage() 
     {
         wiringPiSetup();
         final GpioController gpio = GpioFactory.getInstance();
 
-        GpioPinDigitalOutput sensor_trigger = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, 
+        GpioPinDigitalOutput sensor_trigger = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, 
             "Sensor Trigger", PinState.LOW);
 
-        GpioPinDigitalInput sensor_result = gpio.provisionDigitalInputPin(RaspiPin.GPIO_05, 
+        GpioPinDigitalInput sensor_result = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03, 
             "Sensor Result", PinPullResistance.PULL_DOWN);
 
-        DistanceSensorClass rangesensor = new DistanceSensorClass(sensor_trigger, sensor_result);
+        DistanceSensor rangesensor = new DistanceSensor(sensor_trigger, sensor_result);
 
         do 
         {
             double distance = rangesensor.getRange();
 
             System.out.println("RangeSensorresult =" + distance + "cm");
+            
+            if(distance < 100)
+            {
+                new Thread( () -> { new CaptureImage(); });
+            }
             try 
             {
               Thread.sleep(1000);
