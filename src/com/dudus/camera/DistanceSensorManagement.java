@@ -28,11 +28,12 @@ public class DistanceSensorManagement
         GpioPinDigitalInput sensor_result = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03, 
             "Sensor Result", PinPullResistance.PULL_DOWN);
 
-        DistanceSensor rangesensor = new DistanceSensor(sensor_trigger, sensor_result);
+        
 
         do 
         {
-            double distance = rangesensor.getRange();
+            DistanceSensor rangesensor = new DistanceSensor(sensor_trigger, sensor_result);
+            int distance = rangesensor.getRange();
 
             System.out.println("RangeSensorresult =" + distance + "cm");
             

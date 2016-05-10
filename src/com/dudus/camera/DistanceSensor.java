@@ -4,8 +4,10 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 
 public class DistanceSensor 
 {
-    GpioPinDigitalOutput firepulse;
-    GpioPinDigitalInput result_pin;
+    private GpioPinDigitalOutput firepulse;
+    private GpioPinDigitalInput result_pin;
+    private long start = 0;
+    private long stop = 0;
 
     DistanceSensor(GpioPinDigitalOutput trigger, GpioPinDigitalInput result_pin) 
     {
@@ -13,9 +15,9 @@ public class DistanceSensor
         this.result_pin = result_pin;
     }
 
-    public double getRange() 
+    public int getRange() 
     {
-        long start = 0;
+        
 
         try 
         {
@@ -28,9 +30,16 @@ public class DistanceSensor
                 start = System.nanoTime();
             }
 
-            while (result_pin.isHigh()) {} 
-
-            return ((System.nanoTime() - start) / 58000);
+            while (result_pin.isHigh()) 
+            {
+                stop = System.nanoTime();
+            } 
+            if(((stop - start) / 58000) > 15000)
+            {
+                return 0;
+            }
+            else
+                 return (int)((stop - start) / 58000);
             
         } 
         catch (Exception e) 
