@@ -1,5 +1,4 @@
-package projektisi;
-import com.dudus.camera.CameraManagement;
+package com.dudus.camera;
 import java.io.File;
 import java.io.FileWriter;
 
@@ -9,18 +8,21 @@ class ServoController
     static final String GPIO_OUT = "out";
     static final String GPIO_ON = "1";
     static final String GPIO_OFF = "0";
+    private static int kat =0;
     private CameraManagement takeShot;
+    private String kierunek;
 
-    public ServoController()
+    public ServoController(String kierunek)
     {
         this.takeShot = new CameraManagement();
+        this.kierunek = kierunek;
         this.manage();
         
     }
     
     public void manage() 
     {
-        String gpioChannel = "24";
+        String gpioChannel = "25";
         FileWriter[] commandChannels;
         
         try 
@@ -51,38 +53,46 @@ class ServoController
             int repeatLoop = 25;
             int counter;
             
-            while (true) 
+            if(kierunek.equals("lewy"))
             {
-                
-                for (counter=0; counter<repeatLoop; counter++) 
+                if(kat == 1)
                 {
-                    
-                    commandChannel.write(GPIO_ON);
-                    commandChannel.flush();               
-                
-                    java.lang.Thread.sleep(0, 800000);
-        
-                    commandChannel.write(GPIO_OFF);
-                    commandChannel.flush();
-                
-                    java.lang.Thread.sleep(period);
-                }
+                    for (counter=0; counter<repeatLoop; counter++) 
+                    {
 
-                for (counter=0; counter<repeatLoop; counter++) 
-                {
-                    commandChannel.write(GPIO_ON);
-                    commandChannel.flush();               
-                
-                    java.lang.Thread.sleep(2, 200000);
+                        commandChannel.write(GPIO_ON);
+                        commandChannel.flush();               
 
-                    commandChannel.write(GPIO_OFF);
-                    commandChannel.flush();
-                
-                    java.lang.Thread.sleep(period);
+                        java.lang.Thread.sleep(0, 800000);
+
+                        commandChannel.write(GPIO_OFF);
+                        commandChannel.flush();
+
+                        java.lang.Thread.sleep(period);
+                    }
+                    kat = 0;
                 }
-              
                 takeShot.takePicture();
-                Thread.sleep(2000);
+            }
+            else if(kierunek.equals("prawy"))
+            {
+                if(kat == 0)
+                {
+                    for (counter=0; counter<repeatLoop; counter++) 
+                    {
+                        commandChannel.write(GPIO_ON);
+                        commandChannel.flush();               
+
+                        java.lang.Thread.sleep(2, 200000);
+
+                        commandChannel.write(GPIO_OFF);
+                        commandChannel.flush();
+
+                        java.lang.Thread.sleep(period);
+                    }
+                    kat = 1;
+                }
+                takeShot.takePicture();
             }
             
         } 

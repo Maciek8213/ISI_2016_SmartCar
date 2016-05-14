@@ -6,14 +6,12 @@ import java.util.Date;
 public class CameraManagement
 {
     private Date date;
-    //private Camera manageImages;
     private SimpleDateFormat dateFormat;
     private final int pictureTimeOut = 500;
     
     public CameraManagement() 
     {
         this.date = new Date();
-       // this.manageImages = manageImages;
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         this.takePicture();
     }

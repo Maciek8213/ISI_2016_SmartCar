@@ -39,11 +39,19 @@ public class Raspberry
 
     private static void Obsluga_aparatu_watek() 
 {
-       /* Aparat = new Thread( () -> { new DistanceSensorManagement(); });
-        Aparat.start();*/
-    System.out.print("bimbam");
-        Aparat = new Thread( () -> { new ServoController(); });
+        Aparat = new Thread( () -> {
+            try 
+            {
+                new HC_SR04_Manage();
+            }
+            catch (InterruptedException ex)
+            {
+                Logger.getLogger(Raspberry.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         Aparat.start();
+        /*Aparat = new Thread( () -> { new ServoController(); });
+        Aparat.start();*/
        
     } 
 }
