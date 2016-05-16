@@ -27,8 +27,8 @@ public class HC_SR04_Manage
     "Sensor Result", PinPullResistance.PULL_DOWN);
    
     private HC_SR04 sensor;
-    private String id_0 = "Jestem czujnik prawy";
-    private String id_1 = "Jestem czujnik lewy";
+    private String id_0 = "lewy";
+    private String id_1 = "prawy";
     
     public HC_SR04_Manage() throws InterruptedException
     {

@@ -16,8 +16,6 @@ public class CameraManagement
         this.takePicture();
     }
 
-   
- 
     public void takePicture()
     {
         try
