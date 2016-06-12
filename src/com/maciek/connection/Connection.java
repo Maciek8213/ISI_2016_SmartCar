@@ -29,7 +29,7 @@ public class Connection {
         adres_urzadzenia=Adres_Clienta_BT;
     }
     void informacje()
-    {
+    {System.out.println("kupasdsadsadasdasdas");
         try {
             LocalDevice localDevice = LocalDevice.getLocalDevice();
             System.out.println("Addres: "+localDevice.getBluetoothAddress());
@@ -65,11 +65,12 @@ public class Connection {
             System.out.println("Nazwa urzadzenia: "+dev.getFriendlyName(true));
             return true;
         }
-        else
-        {
-            System.out.println("Nie prawidlowe urzadznie");
-            return false;
-        }
+    //    else
+        //{
+          //  System.out.println("Nie prawidlowe urzadznie");
+         //   return false;
+        //}
+        return false;
     }
     
     private void Informacje_o_urzadzeniu() throws BluetoothStateException

@@ -7,18 +7,17 @@ import java.text.Format;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class HC_SR04
 {
     private final Format DF22 = new DecimalFormat("#0.00");
     private final Format DF_N = new DecimalFormat("#.##########################");
-    private GpioPinDigitalOutput trigPin;
-    private GpioPinDigitalInput  echoPin;
-    private String id;
+    private final GpioPinDigitalOutput trigPin;
+    private final GpioPinDigitalInput  echoPin;
+    private final String id;
     private final double SOUND_SPEED = 34029;  // 34300;         // in cm, 340.29 m/s
     private final double DIST_FACT   = SOUND_SPEED / 2; // round trip
     private short blad = 0; 
-    private int MIN_DIST = 20;
+    private int MIN_DIST = 15;
     private boolean verbose = false;
     private final long BILLION = (long)10E9;
     private final int TEN_MICRO_SEC = 10 * 1000; // In Nano secs
@@ -98,7 +97,7 @@ public class HC_SR04
                 {
                     System.out.println("Wbilem tutaj bo distance = "+distance);
                     new Thread( () -> { try {
-                        new plumen(id);
+                        new servoController(id);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(HC_SR04.class.getName()).log(Level.SEVERE, null, ex);
                         }

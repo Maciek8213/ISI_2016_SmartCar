@@ -1,49 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.maciek.connection;
 
-
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.microedition.io.StreamConnection;
 
-/**
- *
- * @author cos
- */
-public class Watek_Odczyt implements Runnable{
-    StreamConnection polaczenie=null;
-    LedControl led;   
+public class Watek_Odczyt implements Runnable
+{
+    StreamConnection polaczenie = null;
+    MoveManagement moveManage;   
+    private static String zmienna = "";
     
-    Watek_Odczyt(StreamConnection connection) {
+    Watek_Odczyt(StreamConnection connection) 
+    {
         polaczenie=connection;
-        led = new LedControl();// w zaleznosci co ma robic
-        led.odblokuj_drzwi();
+        moveManage = new MoveManagement();
     }
     
     @Override
-    public void run() {
+    public void run() 
+    {
         try
         {
             System.out.println("Watek_Nasluchuje...");
             BufferedReader bReader=new BufferedReader(new InputStreamReader(polaczenie.openInputStream()));
-        while(true)
-        {
-         String lineRead=bReader.readLine();
-            if (lineRead.equals("g")){ 
-                led.zapal();    
-            }else if(lineRead.equals("1"))
-                led.zgas(); 
-         System.out.print(lineRead);
+            
+            while(true)
+            {
+                String lineRead=bReader.readLine();
+                System.out.println(lineRead+" A ZMIENNA TERAZ "+zmienna);
+                if (!lineRead.isEmpty() && !lineRead.equals(zmienna))
+                { 
+                    zmienna = lineRead;
+                    System.out.println(zmienna);
+                    moveManage.zapal(lineRead);
+                }
+            }
         }
-        }catch(Exception e)
+        catch(Exception e)
         {
                 System.out.println("Watek sie wysypal soreczki :(");
         }
     
     }
-    }
+}
